@@ -1,0 +1,97 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.1'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id("org.openapi.generator") version "7.2.0"
+}
+
+group = 'at.grafolution'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudVersion', "2023.0.0")
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.kafka:spring-kafka'
+
+
+
+
+
+
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'com.fasterxml.jackson.core:jackson-core'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations'
+	implementation 'org.openapitools:jackson-databind-nullable:0.2.1' // For JsonNullable
+
+
+
+	// JSR-303 Validierungen
+	implementation 'javax.validation:validation-api:2.0.1.Final'
+	implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
+
+	// Swagger/OpenAPI
+	implementation 'io.swagger.core.v3:swagger-annotations:2.1.11'
+
+	// Für javax.annotation.Generated (Optional: nur erforderlich, wenn du Java-Versionen vor Java 11 verwendest)
+	implementation 'javax.annotation:javax.annotation-api:1.3.2'
+
+
+	testImplementation 'de.bwaldvogel:mongo-java-server:1.39.0'
+
+
+
+
+
+}
+
+// Configure the OpenAPI Generator task
+openApiGenerate {
+	generatorName = 'spring' // Use the 'spring' generator
+	inputSpec = "$rootDir/src/main/resources/api-spec.yaml".toString() // Path to your OpenAPI spec
+	outputDir = "$buildDir/generated-sources".toString()
+	apiPackage = 'at.grafolution.ConfigStreamHub.adapters.web' // Generated controllers will go here
+	modelPackage = 'at.grafolution.ConfigStreamHub.domain.model' // Generated models will go here
+	invokerPackage = 'at.grafolution.ConfigStreamHub.adapters' // Base package for generated code
+	configOptions = [
+			dateLibrary: 'java8', // Use Java 8 date types
+			interfaceOnly : 'true' // Generate only interfaces for API endpoints
+	]
+}
+// Task to copy the generated sources to the main Java directory
+tasks.register('copyGeneratedSources', Copy) {
+	from "$buildDir/generated-sources"
+	into "$projectDir"
+}
+
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

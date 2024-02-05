@@ -1,0 +1,6 @@
+.openapi-generator-ignore
+README.md
+pom.xml
+src/main/java/at/grafolution/ConfigStreamHub/adapters/web/ApiUtil.java
+src/main/java/at/grafolution/ConfigStreamHub/domain/model/Comment.java
+src/main/java/at/grafolution/ConfigStreamHub/domain/model/Post.java
