@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  title: ConfigStreamHub API
+  version: "1.0.0"
+paths: {}
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+      required:
+        - title
+        - content
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        postId:
+          type: string
+          format: uuid
+        author:
+          type: string
+        content:
+          type: string
+      required:
+        - postId
+        - author
+        - content
