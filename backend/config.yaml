@@ -1,0 +1,16 @@
+generatorName: spring
+outputDir: backend/resources/
+inputSpec: backend/src/main/resources/api-spec.yaml
+modelPackage: at.grafolution.ConfigStreamHub
+invokerPackage: at.grafolution
+groupId: at.grafolution
+artifactId: at.grafolution
+artifactVersion: 1.0.0
+library: spring-boot
+additionalProperties:
+  serializableModel: true
+  useBeansValidation: false
+  useLombok: true
+  useOptional: false
+  configOptions:
+  dateLibrary: java8

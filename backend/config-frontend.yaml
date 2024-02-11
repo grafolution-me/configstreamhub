@@ -1,0 +1,14 @@
+generatorName: typescript-angular
+outputDir: frontend/src/app/api
+inputSpec: backend/src/main/resources/api-spec.yaml
+npmVersion: 1.0.0
+snapshot: false
+additionalProperties:
+  ngVersion: '11.0.0' # Stellen Sie sicher, dass diese Version mit Ihrer Angular-Version übereinstimmt
+  fileNaming: 'kebab-case'
+  modelPropertyNaming: 'camelCase'
+  enumPropertyNaming: "camelCase"
+  generateApiDocumentation: true
+  generateModelDocumentation: true
+  generateModelTests: false
+  generateApiTests: false
